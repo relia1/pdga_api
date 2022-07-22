@@ -82,18 +82,12 @@ module Pdga
     end
 
     def self.update_envs(response)
-      f = File.new(".env", "w")
+      f = File.new("pdga_api.env", "w")
       f.write("SESSID=#{response["sessid"]}\nSESSION_NAME=#{response["session_name"]}\nTOKEN=#{response["token"]}")
       f.close
       ENV["SESSID"] = response["sessid"]
       ENV["SESSION_NAME"] = response["session_name"]
       ENV["TOKEN"] = response["token"]
-    end
-
-    def self.clear_env
-      f = File.new(".env", "w")
-      f.write("SESSID=\nSESSION_NAME=\nTOKEN=")
-      f.close
     end
   end
 end

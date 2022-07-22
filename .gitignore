@@ -6,3 +6,5 @@
 /pkg/
 /spec/reports/
 /tmp/
+/secret.env
+/pdga_api.env

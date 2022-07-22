@@ -47,7 +47,6 @@ module Pdga
 
     def self.logout
       response = build_request("post", "services/json/user/logout")
-      clear_env
       JSON.parse(response.body)
     end
 

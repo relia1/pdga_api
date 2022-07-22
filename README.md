@@ -1,8 +1,5 @@
 # PdgaApi
-
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/pdga_api`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+PDGA API Wrapper
 
 ## Installation
 
@@ -19,20 +16,28 @@ And then execute:
 Or install it yourself as:
 
     $ gem install pdga_api
+## Starting steps
+
+Out of the box there are some ENV vars that are needed in order to make this gem work (also assumes you already have PDGA API access)
+First in the root directory there are 2 template .env files you can look at for setting up the ENV vars. You can run this with just a secret.env that contains your PDGA username and password
+If you run the login method it will write out a .env with additional information the API needs to make calls. (session id, session name, and token)
 
 ## Usage
 
-TODO: Write usage instructions here
+Expected responses can all be found here https://www.pdga.com/dev/api/rest/v1/auth
 
-## Development
-
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake test` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
-
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and the created tag, and push the `.gem` file to [rubygems.org](https://rubygems.org).
-
-## Contributing
-
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/pdga_api. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/[USERNAME]/pdga_api/blob/master/CODE_OF_CONDUCT.md).
+There are 4 types of actions that this gem allows you to perform.
+1. Authentication
+   1. login Pdga::Client.login({ username: ENV["USERNAME"], password: ENV["PASSWORD"] }) (Could pass the actual username/password)
+   2. connection status Pdga::Client.connect
+   3. logout Pdga::Client.logout
+2. Player information which takes a hash of various search params that are listed on the PDGA site (default 10 returned with a max of 200)
+   1. player search Pdga::Client.players({ pdga_number: "15857" })
+   2. player statistics search Pdga::Client.player_statistics({ pdga_number: "15857", year: "2022" })
+3. Event information which takes a hash of various search params that are listed on the PDGA site (default 10 returned with a max of 200)
+   1. event search Pdga::Client.events({ tournament_id: "47877" })
+4. Course information which takes a hash of various search params that are listed on the PDGA site (default 10 returned with a max of 200)
+   1. course search Pdga::Client.courses({ course_id: "2146" })
 
 ## License
 
@@ -40,4 +45,11 @@ The gem is available as open source under the terms of the [MIT License](https:/
 
 ## Code of Conduct
 
-Everyone interacting in the PdgaApi project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/[USERNAME]/pdga_api/blob/master/CODE_OF_CONDUCT.md).
+Everyone interacting in the PdgaApi project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/relia1/pdga_api/blob/master/CODE_OF_CONDUCT.md).
+
+## Todos
+
+1. Mock the tests!
+2. Figure out something better for the ENV vars
+3. Add response error handling from the API
+4. Refactor duplicated code in client.rb

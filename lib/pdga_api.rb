@@ -5,7 +5,23 @@ require_relative "pdga_api/client"
 require "dotenv"
 
 module PdgaApi
-  class Error < StandardError; end
-  # Your code goes here...
-  Dotenv.load("pdga_api.env", "secret.env")
+  class << self
+    attr_accessor :options
+  end
+  self.options = {}
+
+  def self.configure(params = {})
+    raise(ArgumentError, "username and password are required parameters") unless params.key?("username") && params.key?("password")
+
+    options[:username] = params[:username]
+    options[:password] = params[:password]
+  end
+
+  def self.config
+    options
+  end
+
+  def self.reset_config
+    self.options = {}
+  end
 end

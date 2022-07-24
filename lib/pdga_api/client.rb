@@ -5,10 +5,19 @@ require "json"
 require "oj"
 require "dotenv"
 
+#TODO move request information to its own file
 module Pdga
   # API Client for PDGA
   class Client
     API_ENDPOINT = "https://api.pdga.com"
+    attr_accessor :username, :password
+
+    def initialize(options = {})
+      raise(ArgumentError, "username and password are required parameters") unless options.key?("username") && options.key?("password")
+
+      @username = options[:username]
+      @password = options[:password]
+    end
 
     def self.players(options)
       params = build_params(options)
@@ -78,15 +87,6 @@ module Pdga
         endpoint: endpoint,
         body: options
       )
-    end
-
-    def self.update_envs(response)
-      f = File.new("pdga_api.env", "w")
-      f.write("SESSID=#{response["sessid"]}\nSESSION_NAME=#{response["session_name"]}\nTOKEN=#{response["token"]}")
-      f.close
-      ENV["SESSID"] = response["sessid"]
-      ENV["SESSION_NAME"] = response["session_name"]
-      ENV["TOKEN"] = response["token"]
     end
   end
 end

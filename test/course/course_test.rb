@@ -3,12 +3,17 @@
 require "./test/test_helper"
 
 class PdgaPlayerTest < Minitest::Test
+  def before_setup
+    super
+    @client = Pdga.new(username: "username goes here", password: "password goes here")
+  end
+
   def test_exists
     assert Pdga::Client
   end
 
   def test_it_gives_back_a_single_course
-    course = Pdga::Client.courses({ course_id: "2146" })
+    course = @client.courses({ course_id: "2146" })
 
     assert_equal 1, course["courses"].count
     course_to_check = course["courses"][0]

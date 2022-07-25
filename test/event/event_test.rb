@@ -3,12 +3,17 @@
 require "./test/test_helper"
 
 class PdgaEventTest < Minitest::Test
+  def before_setup
+    super
+    @client = Pdga.new(username: "username goes here", password: "password goes here")
+  end
+
   def test_exists
     assert Pdga::Client
   end
 
   def test_it_gives_back_a_single_event
-    event = Pdga::Client.events({ tournament_id: "47877" })
+    event = @client.events({ tournament_id: "47877" })
 
     assert_equal 1, event["events"].count
     event_to_check = event["events"][0]

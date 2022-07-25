@@ -3,12 +3,17 @@
 require "./test/test_helper"
 
 class PdgaPlayerTest < Minitest::Test
+  def before_setup
+    super
+    @client = Pdga.new(username: "username goes here", password: "password goes here")
+  end
+
   def test_exists
     assert Pdga::Client
   end
 
   def test_it_gives_back_a_single_player
-    player = Pdga::Client.players({ pdga_number: "15857" })
+    player = @client.players({ pdga_number: "15857" })
 
     assert_equal 1, player["players"].count
     player_to_check = player["players"][0]
@@ -29,7 +34,7 @@ class PdgaPlayerTest < Minitest::Test
   end
 
   def test_it_gives_back_a_players_stats
-    player = Pdga::Client.player_statistics({ pdga_number: "15857", year: "2022" })
+    player = @client.player_statistics({ pdga_number: "15857", year: "2022" })
 
     assert_equal 1, player["players"].count
     player_to_check = player["players"][0]

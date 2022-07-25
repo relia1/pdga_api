@@ -7,8 +7,12 @@ class PdgaAuthTest < Minitest::Test
     assert Pdga::Client
   end
 
+  def before_setup
+    super
+    @client = Pdga.new(username: "username goes here", password: "password goes here")
+  end
+
   def test_it_logs_in_a_user
-    logged_in_user = Pdga::Client.login({ username: ENV["USERNAME"], password: ENV["PASSWORD"] })
     assert_equal true, logged_in_user.key?("sessid")
     assert_equal true, logged_in_user.key?("session_name")
     assert_equal true, logged_in_user.key?("token")
@@ -26,6 +30,6 @@ class PdgaAuthTest < Minitest::Test
   end
 
   def test_it_checks_logged_in_status
-    assert_equal "1", Pdga::Client.connect["user"]["status"]
+    assert_equal "1", @client.connect["user"]["status"]
   end
 end

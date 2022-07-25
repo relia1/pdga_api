@@ -18,9 +18,7 @@ Or install it yourself as:
     $ gem install pdga_api
 ## Starting steps
 
-Out of the box there are some ENV vars that are needed in order to make this gem work (also assumes you already have PDGA API access)
-First in the root directory there are 2 template .env files you can look at for setting up the ENV vars. You can run this with just a secret.env that contains your PDGA username and password
-If you run the login method it will write out a .env with additional information the API needs to make calls. (session id, session name, and token)
+In order to use this you will need to initialize using your pdga username and password
 
 ## Usage
 
@@ -28,16 +26,16 @@ Expected responses can all be found here https://www.pdga.com/dev/api/rest/v1/au
 
 There are 4 types of actions that this gem allows you to perform.
 1. Authentication
-   1. login Pdga::Client.login({ username: ENV["USERNAME"], password: ENV["PASSWORD"] }) (Could pass the actual username/password)
-   2. connection status Pdga::Client.connect
-   3. logout Pdga::Client.logout
+   1. Initialize `@client = Pdga.new(username: "username goes here", password: "password goes here")`
+   2. connection status `@client.connect`
+   3. logout `@client.logout`
 2. Player information which takes a hash of various search params that are listed on the PDGA site (default 10 returned with a max of 200)
-   1. player search Pdga::Client.players({ pdga_number: "15857" })
-   2. player statistics search Pdga::Client.player_statistics({ pdga_number: "15857", year: "2022" })
+   1. player search `@client.players({ pdga_number: "15857" })`
+   2. player statistics search `@client.player_statistics({ pdga_number: "15857", year: "2022" })`
 3. Event information which takes a hash of various search params that are listed on the PDGA site (default 10 returned with a max of 200)
-   1. event search Pdga::Client.events({ tournament_id: "47877" })
+   1. event search `@client.events({ tournament_id: "47877" })`
 4. Course information which takes a hash of various search params that are listed on the PDGA site (default 10 returned with a max of 200)
-   1. course search Pdga::Client.courses({ course_id: "2146" })
+   1. course search `@client.courses({ course_id: "2146" })`
 
 ## License
 
@@ -50,6 +48,5 @@ Everyone interacting in the PdgaApi project's codebases, issue trackers, chat ro
 ## Todos
 
 1. Mock the tests!
-2. Figure out something better for the ENV vars
-3. Add response error handling from the API
-4. Refactor duplicated code in client.rb
+2. Make readme pretty and thorough 
+3. Make sure config will load from rails config/initializers

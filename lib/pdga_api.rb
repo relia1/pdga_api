@@ -15,7 +15,7 @@ module Pdga
   end
 
   def self.configure(params = {})
-    raise(ArgumentError, "username and password are required parameters") unless params.key?("username") && params.key?("password")
+    raise(ArgumentError, "username and password are required parameters") unless params.key?(:username) && params.key?(:password)
 
     options[:username] = params[:username]
     options[:password] = params[:password]

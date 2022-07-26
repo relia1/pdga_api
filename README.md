@@ -48,5 +48,4 @@ Everyone interacting in the PdgaApi project's codebases, issue trackers, chat ro
 ## Todos
 
 1. Mock the tests!
-2. Make readme pretty and thorough 
-3. Make sure config will load from rails config/initializers
+2. Make readme pretty and thorough
